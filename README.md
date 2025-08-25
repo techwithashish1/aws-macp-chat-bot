@@ -2,34 +2,34 @@
 
 This project demonstrates a **flexible, serverless customer support chatbot** that can leverage **any AWS Bedrock Foundation Model** including Amazon Nova, Anthropic Claude, Meta Llama, and others. Built with AWS Lambda, DynamoDB, API Gateway, and full **Model Context Protocol (MCP)** compliance.
 
-## 📋 **Table of Contents**
+## **Table of Contents**
 
-- [⚡ Quick Start](#quick-start)
-- [🌟 Key Highlights](#key-highlights)
-- [🏗️ Architecture Overview](#architecture-overview)
-- [🤖 Supported Bedrock Models](#supported-bedrock-models)
-- [📊 Model Selection & Performance Guide](#model-selection--performance-guide)
-- [🛠️ Local Development](#local-development)
-- [🔥 MCP Protocol Implementation](#mcp-protocol-implementation)
-- [📁 Project Structure](#project-structure)
-- [🧪 Testing Your Deployment](#testing-your-deployment)
-- [🔧 Advanced Configuration](#advanced-configuration)
-- [🔍 Monitoring & Observability](#monitoring--observability)
-- [🚨 Troubleshooting](#troubleshooting)
-- [💡 Best Practices](#best-practices)
-- [🎯 Use Case Examples](#use-case-examples)
-- [📚 Additional Resources](#additional-resources)
+- [Quick Start](#quick-start)
+- [Key Highlights](#key-highlights)
+- [Architecture Overview](#architecture-overview)
+- [Supported Bedrock Models](#supported-bedrock-models)
+- [Model Selection & Performance Guide](#model-selection--performance-guide)
+- [Local Development](#local-development)
+- [MCP Protocol Implementation](#mcp-protocol-implementation)
+- [Project Structure](#project-structure)
+- [Testing Your Deployment](#testing-your-deployment)
+- [Advanced Configuration](#advanced-configuration)
+- [Monitoring & Observability](#monitoring--observability)
+- [Troubleshooting](#troubleshooting)
+- [Best Practices](#best-practices)
+- [Use Case Examples](#use-case-examples)
+- [Additional Resources](#additional-resources)
 
-## ⚡ **Quick Start**
+## **Quick Start**
 
 Get your multi-model AI chatbot running in **under 5 minutes**!
 
-### **✅ Prerequisites**
+### **Prerequisites**
 - AWS account with Bedrock model access enabled
 - AWS CLI configured (`aws configure`)
 - AWS SAM CLI installed ([Install Guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html))
 
-### **🚀 Deploy Your Chatbot**
+### **Deploy Your Chatbot**
 
 #### **Option 1: Interactive Deployment (Recommended)**
 ```bash
@@ -55,7 +55,7 @@ sam deploy --stack-name aws-mcp-chatbot --capabilities CAPABILITY_IAM \
   --parameter-overrides BedrockModelId=meta.llama3-2-11b-instruct-v1:0
 ```
 
-### **🧪 Test Your Deployment**
+### **Test Your Deployment**
 ```bash
 # Run comprehensive tests
 .\test_mcp.ps1
@@ -64,13 +64,13 @@ sam deploy --stack-name aws-mcp-chatbot --capabilities CAPABILITY_IAM \
 .\test_models.ps1
 ```
 
-### **🎯 What You Get**
-- ✅ **Production-ready** serverless AI chatbot with auto-scaling
-- ✅ **Any Bedrock model** of your choice (Nova, Claude, Llama)
-- ✅ **Full MCP compliance** for easy integration
-- ✅ **Cost optimization** - pay only for what you use
+### **What You Get**
+- Production-ready serverless AI chatbot with auto-scaling
+- Any Bedrock model of your choice (Nova, Claude, Llama)
+- Full MCP compliance for easy integration
+- Cost optimization - pay only for what you use
 
-### **🔗 Next Steps**
+### **Next Steps**
 1. **Get your API URL**: Check CloudFormation outputs
 2. **Integrate with your app**: Use the `/mcp` endpoint
 3. **Monitor costs**: Check AWS Cost Explorer
@@ -78,17 +78,17 @@ sam deploy --stack-name aws-mcp-chatbot --capabilities CAPABILITY_IAM \
 
 ---
 
-## 🌟 **Key Highlights**
+## **Key Highlights**
 
-- **🤖 Multi-Model Flexibility**: Choose from Amazon Nova, Anthropic Claude, Meta Llama, and other Bedrock models
-- **🔥 MCP Protocol Compliance**: Full adherence to MCP 2024-11-05 specification  
-- **⚡ Dual Deployment**: Production AWS Lambda + Local WebSocket development server
-- **🎯 Zero-Code Model Switching**: Change AI models via environment variables
-- **💰 Cost Optimization**: Select models based on performance and budget requirements
-- **🔄 Future-Proof**: Ready for new Bedrock models as they're released
-- **🔒 Enterprise Ready**: Full AWS security, IAM, and compliance features
+- **Multi-Model Flexibility**: Choose from Amazon Nova, Anthropic Claude, Meta Llama, and other Bedrock models
+- **MCP Protocol Compliance**: Full adherence to MCP 2024-11-05 specification  
+- **Dual Deployment**: Production AWS Lambda + Local WebSocket development server
+- **Zero-Code Model Switching**: Change AI models via environment variables
+- **Cost Optimization**: Select models based on performance and budget requirements
+- **Future-Proof**: Ready for new Bedrock models as they're released
+- **Enterprise Ready**: Full AWS security, IAM, and compliance features
 
-## 🏗️ **Architecture Overview**
+## **Architecture Overview**
 
 ### **Flexible Multi-Model Design**
 
@@ -158,7 +158,7 @@ sam deploy --stack-name aws-mcp-chatbot --capabilities CAPABILITY_IAM \
 | **local/mcp_server.py** | Local development server | WebSocket | WebSocket + JSON-RPC 2.0 |
 | **local/mcp_client.py** | Testing and integration | Local/Remote | Configurable |
 
-## 🤖 **Supported Bedrock Models**
+## **Supported Bedrock Models**
 
 ### **Amazon Nova Family** (Recommended)
 ```yaml
@@ -199,7 +199,7 @@ BedrockModelId: meta.llama3-2-3b-instruct-v1:0
 BedrockModelId: meta.llama3-2-1b-instruct-v1:0
 ```
 
-## 📊 **Model Selection & Performance Guide**
+## **Model Selection & Performance Guide**
 
 ### **Recommended Models by Use Case**
 | Use Case | Recommended Model | Reason | Cost Level | Latency |
@@ -212,12 +212,12 @@ BedrockModelId: meta.llama3-2-1b-instruct-v1:0
 | **Open Source Preference** | `meta.llama3-2-11b-instruct-v1:0` | Meta's proven model | $$$ | ~1.5s |
 
 ### **Cost & Performance Overview**
-- **💸 Most Cost-Effective**: Nova Micro → Nova Lite → Llama 11B
-- **⚡ Fastest Response**: Nova Micro → Nova Lite → Claude Haiku  
-- **🧠 Best Reasoning**: Claude Sonnet → Nova Pro → Llama 11B
-- **⚖️ Best Balance**: Nova Lite (recommended for most use cases)
+- **Most Cost-Effective**: Nova Micro → Nova Lite → Llama 11B
+- **Fastest Response**: Nova Micro → Nova Lite → Claude Haiku  
+- **Best Reasoning**: Claude Sonnet → Nova Pro → Llama 11B
+- **Best Balance**: Nova Lite (recommended for most use cases)
 
-## ️ **Local Development**
+## **Local Development**
 
 ### **Start Local Development Server**
 ```bash
@@ -250,14 +250,14 @@ export BEDROCK_MODEL_ID=meta.llama3-2-3b-instruct-v1:0
 python mcp_server.py
 ```
 
-## 🔥 **MCP Protocol Implementation**
+## **MCP Protocol Implementation**
 
 ### **Full MCP 2024-11-05 Specification**
-- ✅ **Tools**: AI-powered conversation tools
-- ✅ **Resources**: Access to conversation history and data
-- ✅ **Prompts**: Pre-configured customer support scenarios
-- ✅ **Sampling**: Direct AI model interaction
-- ✅ **JSON-RPC 2.0**: Standard protocol compliance
+- **Tools**: AI-powered conversation tools
+- **Resources**: Access to conversation history and data
+- **Prompts**: Pre-configured customer support scenarios
+- **Sampling**: Direct AI model interaction
+- **JSON-RPC 2.0**: Standard protocol compliance
 
 ### **Available MCP Tools**
 
@@ -303,23 +303,39 @@ python mcp_server.py
 - **password_reset_help**: Specialized password reset guidance
 - **technical_support**: Technical issue resolution
 
-## 📁 **Project Structure**
+## **Project Structure**
 
 ```
 aws-mcp-chat-bot/
-├── mcp_lambda_handler.py      # 🚀 Production MCP server (AWS Lambda)
-├── mcp_server.py              # 🔧 Local MCP server (WebSocket)
-├── mcp_client.py              # 🧪 MCP client for testing
-├── template.yaml              # 📋 AWS SAM deployment template
-├── requirements.txt           # 📦 Python dependencies
-├── test_mcp.json             # 🧪 MCP protocol test events
-├── test_mcp.ps1              # 🔍 PowerShell test script
-├── test_events.json          # 📝 Lambda test events
-├── test_events_nova.json     # 🤖 Model-specific test events
-└── README.md                 # 📚 This comprehensive guide
+├── .aws-sam/                     # AWS SAM build artifacts
+├── .git/                         # Git repository metadata
+├── extra/                        # Additional resources and documentation
+│   └── architecture.png          # Architecture diagram
+├── src/                          # Source code directory
+│   ├── lambda_function/          # Production Lambda function
+│   │   └── mcp_lambda_handler.py # Main Lambda MCP server
+│   ├── local/                    # Local development tools
+│   │   ├── mcp_server.py         # Local WebSocket MCP server
+│   │   └── mcp_client.py         # MCP client for testing
+│   └── requirements.txt          # Python dependencies
+├── test_essentials/              # Testing and validation
+│   ├── test_events.json          # Lambda test events
+│   ├── test_events_bedrock.json  # Bedrock-specific test events
+│   ├── test_events_models.json   # Model comparison test events
+│   ├── test_events_nova.json     # Nova model test events
+│   ├── test_mcp.json             # MCP protocol test events
+│   ├── test_mcp_complete.json    # Complete MCP test suite
+│   ├── test_mcp.ps1              # PowerShell MCP test script
+│   └── test_models.ps1           # PowerShell model comparison script
+├── .gitignore                    # Git ignore patterns
+├── .samignore                    # SAM ignore patterns
+├── README.md                     # This comprehensive guide
+├── sample_api_requests.json      # Sample API request examples
+├── samconfig.toml                # SAM configuration
+└── template.yaml                 # AWS SAM deployment template
 ```
 
-## 🧪 **Testing Your Deployment**
+## **Testing Your Deployment**
 
 ### **Test MCP Protocol**
 ```powershell
@@ -368,7 +384,7 @@ curl -X POST https://your-api-id.execute-api.us-east-1.amazonaws.com/dev/mcp \
   }'
 ```
 
-##  **Advanced Configuration**
+## **Advanced Configuration**
 
 ### **Environment Variables**
 
@@ -428,7 +444,7 @@ export MCP_TOP_P=0.9
 }
 ```
 
-## 🔍 **Monitoring & Observability**
+## **Monitoring & Observability**
 
 ### **CloudWatch Metrics**
 ```bash
@@ -456,7 +472,7 @@ aws ce get-cost-and-usage \
   --group-by Type=DIMENSION,Key=SERVICE
 ```
 
-## 🚨 **Troubleshooting**
+## **Troubleshooting**
 
 ### **Common Issues**
 
@@ -516,7 +532,7 @@ print('Model access successful!')
 "
 ```
 
-## 💡 **Best Practices**
+## **Best Practices**
 
 ### **Model Selection Strategy**
 1. **Start with Nova Lite**: Good balance of cost and quality
@@ -536,7 +552,7 @@ print('Model access successful!')
 3. **Use appropriate timeouts**: Set realistic timeouts for different models
 4. **Implement graceful degradation**: Fallback to simpler models if needed
 
-## 🎯 **Use Case Examples**
+## **Use Case Examples**
 
 ### **High-Volume Customer Support**
 ```yaml
@@ -570,7 +586,7 @@ Monitoring: Enhanced
 BackupRetention: 30days
 ```
 
-## 📚 **Additional Resources**
+## **Additional Resources**
 
 - **[AWS Bedrock Documentation](https://docs.aws.amazon.com/bedrock/)**
 - **[Model Context Protocol Specification](https://modelcontextprotocol.io/)**
@@ -579,7 +595,7 @@ BackupRetention: 30days
 
 ---
 
-**🚀 Ready to deploy your multi-model AI chatbot? Choose your preferred Bedrock model and deploy in minutes!**
+**Ready to deploy your multi-model AI chatbot? Choose your preferred Bedrock model and deploy in minutes!**
 
 ```bash
 # Quick start with recommended model
