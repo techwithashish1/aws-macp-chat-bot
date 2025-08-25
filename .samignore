@@ -1,0 +1,36 @@
+# SAM build ignore patterns
+# Exclude files not needed for Lambda deployment
+
+# Test files
+test_*.json
+test_*.ps1
+test_essentials/
+
+# Development files
+mcp_server.py
+mcp_client.py
+
+# Documentation
+README*.md
+
+# Git and SAM build artifacts
+.git/
+.aws-sam/
+*.pyc
+__pycache__/
+.pytest_cache/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*~

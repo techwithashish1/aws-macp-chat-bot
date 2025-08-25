@@ -1,0 +1,39 @@
+{
+  "test_mcp_client": {
+    "message": "Hello, I need help with my account",
+    "user_id": "test_user_123",
+    "session_id": "session_abc_123"
+  },
+  "test_mcp_server": {
+    "query": "What is Model Context Protocol and how does multi-model support work?",
+    "conversation_id": "conv_xyz_456",
+    "context": {
+      "user_id": "test_user_123",
+      "session_id": "session_abc_123"
+    }
+  },
+  "test_customer_support": {
+    "message": "I'm frustrated with the slow response time",
+    "user_id": "customer_789"
+  },
+  "test_chat_with_ai_tool": {
+    "message": "Testing the new chat_with_ai tool with configurable Bedrock models",
+    "user_id": "test_user_456",
+    "conversation_id": "new_tool_test_001"
+  },
+  "test_backward_compatibility": {
+    "message": "Testing backward compatibility with old chat_with_nova tool name",
+    "user_id": "compat_user_789",
+    "conversation_id": "compat_test_001"
+  },
+  "test_complex_scenario": {
+    "message": "I've been trying to reset my password for 3 hours. I've received 2 reset emails but the links don't work. I have an important presentation in 30 minutes and need access to my account files. This is extremely urgent and I'm very frustrated. What are all my options?",
+    "user_id": "urgent_user_101",
+    "conversation_id": "complex_scenario_001"
+  },
+  "test_sentiment_analysis": {
+    "message": "I absolutely love this service! The AI responses are incredibly helpful and the multi-model support gives me exactly what I need. Thank you so much!",
+    "user_id": "happy_user_202",
+    "conversation_id": "sentiment_positive_001"
+  }
+}

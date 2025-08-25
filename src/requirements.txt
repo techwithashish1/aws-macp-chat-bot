@@ -1,0 +1,6 @@
+# AWS Lambda Dependencies
+# boto3 and botocore are provided by AWS Lambda runtime
+# This file should only contain additional dependencies needed for Lambda
+
+# Currently no additional dependencies required
+# All imports use standard library or AWS-provided packages

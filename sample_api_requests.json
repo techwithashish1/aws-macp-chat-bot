@@ -1,0 +1,201 @@
+{
+  "sample_mcp_initialize": {
+    "description": "Initialize MCP connection - First request to establish connection",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "init-1",
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2024-11-05",
+        "capabilities": {
+          "tools": {},
+          "resources": {},
+          "prompts": {},
+          "experimental": {
+            "sampling": true
+          }
+        },
+        "clientInfo": {
+          "name": "API Test Client",
+          "version": "1.0.0"
+        }
+      }
+    }
+  },
+  "sample_tools_list": {
+    "description": "List available MCP tools",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "tools-1",
+      "method": "tools/list",
+      "params": {}
+    }
+  },
+  "sample_chat_with_ai": {
+    "description": "Chat with AI using the new tool name",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "chat-1",
+      "method": "tools/call",
+      "params": {
+        "name": "chat_with_ai",
+        "arguments": {
+          "message": "Hello, I need help with my account login. I've forgotten my password and the reset link isn't working.",
+          "conversation_id": "test_conv_001",
+          "user_id": "test_user_123"
+        }
+      }
+    }
+  },
+  "sample_chat_backward_compatible": {
+    "description": "Test backward compatibility with old tool name",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "chat-2",
+      "method": "tools/call",
+      "params": {
+        "name": "chat_with_nova",
+        "arguments": {
+          "message": "Testing backward compatibility with the old tool name.",
+          "conversation_id": "test_conv_002",
+          "user_id": "test_user_123"
+        }
+      }
+    }
+  },
+  "sample_get_history": {
+    "description": "Get conversation history",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "history-1",
+      "method": "tools/call",
+      "params": {
+        "name": "get_conversation_history",
+        "arguments": {
+          "conversation_id": "test_conv_001"
+        }
+      }
+    }
+  },
+  "sample_complex_support": {
+    "description": "Complex customer support scenario with sentiment analysis",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "complex-1",
+      "method": "tools/call",
+      "params": {
+        "name": "chat_with_ai",
+        "arguments": {
+          "message": "I'm extremely frustrated! I've been trying to access my account for 3 hours. I've tried resetting my password twice, but the emails never arrive. I have an important business presentation in 30 minutes and need to access my files urgently. This is completely unacceptable!",
+          "conversation_id": "urgent_conv_001",
+          "user_id": "frustrated_customer_456"
+        }
+      }
+    }
+  },
+  "sample_positive_feedback": {
+    "description": "Positive customer feedback for sentiment analysis",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "positive-1",
+      "method": "tools/call",
+      "params": {
+        "name": "chat_with_ai",
+        "arguments": {
+          "message": "I absolutely love this service! The AI responses are incredibly helpful and accurate. Thank you so much for the excellent support!",
+          "conversation_id": "happy_conv_001",
+          "user_id": "satisfied_customer_789"
+        }
+      }
+    }
+  },
+  "sample_resources_list": {
+    "description": "List available MCP resources",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "resources-1",
+      "method": "resources/list",
+      "params": {}
+    }
+  },
+  "sample_prompts_list": {
+    "description": "List available MCP prompts",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "prompts-1",
+      "method": "prompts/list",
+      "params": {}
+    }
+  },
+  "sample_sampling": {
+    "description": "Test MCP sampling capability",
+    "method": "POST",
+    "endpoint": "/mcp",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": "sampling-1",
+      "method": "sampling/createMessage",
+      "params": {
+        "messages": [
+          {
+            "role": "user",
+            "content": {
+              "type": "text",
+              "text": "I'm having trouble with my account authentication. Can you help me understand what steps I should take to resolve this issue?"
+            }
+          }
+        ],
+        "maxTokens": 500,
+        "temperature": 0.7
+      }
+    }
+  }
+}

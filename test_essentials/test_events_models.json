@@ -1,0 +1,162 @@
+{
+  "test_amazon_nova_lite": {
+    "jsonrpc": "2.0",
+    "id": "nova-1",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "Hello, I need help with my account. Can you provide fast assistance?",
+        "conversation_id": "nova_lite_conv_001",
+        "user_id": "nova_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0"
+    }
+  },
+  "test_amazon_nova_micro": {
+    "jsonrpc": "2.0",
+    "id": "nova-2",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "Quick question: How do I reset my password?",
+        "conversation_id": "nova_micro_conv_001",
+        "user_id": "nova_micro_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "amazon.nova-micro-v1:0"
+    }
+  },
+  "test_amazon_nova_pro": {
+    "jsonrpc": "2.0",
+    "id": "nova-3",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "I have a complex billing issue that involves multiple transactions and need detailed analysis of my account history to understand discrepancies.",
+        "conversation_id": "nova_pro_conv_001",
+        "user_id": "nova_pro_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "amazon.nova-pro-v1:0"
+    }
+  },
+  "test_claude_sonnet": {
+    "jsonrpc": "2.0",
+    "id": "claude-1",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "I need help with a technical issue that requires logical reasoning. My API integration is failing intermittently and I need to understand the root cause.",
+        "conversation_id": "claude_sonnet_conv_001",
+        "user_id": "claude_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "anthropic.claude-3-5-sonnet-20241022-v2:0"
+    }
+  },
+  "test_claude_haiku": {
+    "jsonrpc": "2.0",
+    "id": "claude-2",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "I need a quick response about my account status. Is everything working properly?",
+        "conversation_id": "claude_haiku_conv_001",
+        "user_id": "claude_haiku_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "anthropic.claude-3-5-haiku-20241022-v1:0"
+    }
+  },
+  "test_claude_opus": {
+    "jsonrpc": "2.0",
+    "id": "claude-3",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "I'm dealing with a sophisticated business process automation issue. I need detailed guidance on implementing a multi-step workflow that involves customer data validation, payment processing, and notification systems.",
+        "conversation_id": "claude_opus_conv_001",
+        "user_id": "claude_opus_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "anthropic.claude-3-opus-20240229-v1:0"
+    }
+  },
+  "test_llama_90b": {
+    "jsonrpc": "2.0",
+    "id": "llama-1",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "I need comprehensive help with understanding complex product features and how they interact with each other in our enterprise setup.",
+        "conversation_id": "llama_90b_conv_001",
+        "user_id": "llama_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "meta.llama3-2-90b-instruct-v1:0"
+    }
+  },
+  "test_llama_11b": {
+    "jsonrpc": "2.0",
+    "id": "llama-2",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "Can you help me understand the best practices for account security?",
+        "conversation_id": "llama_11b_conv_001",
+        "user_id": "llama_11b_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "meta.llama3-2-11b-instruct-v1:0"
+    }
+  },
+  "test_llama_3b": {
+    "jsonrpc": "2.0",
+    "id": "llama-3",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "I forgot my username. How can I recover it?",
+        "conversation_id": "llama_3b_conv_001",
+        "user_id": "llama_3b_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "meta.llama3-2-3b-instruct-v1:0"
+    }
+  },
+  "test_backward_compatibility": {
+    "jsonrpc": "2.0",
+    "id": "compat-1",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_nova",
+      "arguments": {
+        "message": "Testing backward compatibility with old tool name",
+        "conversation_id": "compat_conv_001",
+        "user_id": "compat_user_123"
+      }
+    },
+    "environment": {
+      "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0"
+    }
+  }
+}

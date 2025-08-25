@@ -1,0 +1,36 @@
+{
+  "test_bedrock_ai_simple": {
+    "query": "Hello, I need help with my account login issues",
+    "conversation_id": "test_conv_001",
+    "context": {
+      "user_id": "test_user_123",
+      "session_id": "session_abc_123"
+    }
+  },
+  "test_bedrock_ai_complex": {
+    "query": "I've been trying to reset my password for the past hour and the email isn't coming through. I'm getting frustrated because I need to access my account urgently for a business meeting.",
+    "conversation_id": "test_conv_002",
+    "context": {
+      "user_id": "business_user_456",
+      "session_id": "session_def_456",
+      "urgency": "high"
+    }
+  },
+  "test_conversation_context": {
+    "query": "What other options do I have?",
+    "conversation_id": "test_conv_001",
+    "context": {
+      "user_id": "test_user_123",
+      "follow_up": true
+    }
+  },
+  "test_mcp_client": {
+    "message": "Can you help me understand what AWS Bedrock AI models can do for customer support?",
+    "user_id": "test_user_789",
+    "session_id": "session_ghi_789"
+  },
+  "test_customer_support": {
+    "message": "I'm extremely disappointed with the service quality lately",
+    "user_id": "customer_upset_101"
+  }
+}

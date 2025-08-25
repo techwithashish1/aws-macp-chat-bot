@@ -1,0 +1,87 @@
+{
+  "test_mcp_initialize": {
+    "jsonrpc": "2.0",
+    "id": "1",
+    "method": "initialize",
+    "params": {
+      "protocolVersion": "2024-11-05",
+      "capabilities": {},
+      "clientInfo": {
+        "name": "Test MCP Client",
+        "version": "1.0.0"
+      }
+    }
+  },
+  "test_mcp_tools_list": {
+    "jsonrpc": "2.0",
+    "id": "2",
+    "method": "tools/list",
+    "params": {}
+  },
+  "test_mcp_chat": {
+    "jsonrpc": "2.0",
+    "id": "3",
+    "method": "tools/call",
+    "params": {
+      "name": "chat_with_ai",
+      "arguments": {
+        "message": "Hello, I need help with my password reset",
+        "conversation_id": "test_conv_001",
+        "user_id": "test_user_123"
+      }
+    }
+  },
+  "test_mcp_history": {
+    "jsonrpc": "2.0",
+    "id": "4",
+    "method": "tools/call",
+    "params": {
+      "name": "get_conversation_history",
+      "arguments": {
+        "conversation_id": "test_conv_001"
+      }
+    }
+  },
+  "test_mcp_sampling": {
+    "jsonrpc": "2.0",
+    "id": "5",
+    "method": "sampling/createMessage",
+    "params": {
+      "messages": [
+        {
+          "role": "user",
+          "content": {
+            "type": "text",
+            "text": "I'm having trouble logging into my account. Can you help me?"
+          }
+        }
+      ],
+      "maxTokens": 500,
+      "temperature": 0.7
+    }
+  },
+  "test_mcp_resources": {
+    "jsonrpc": "2.0",
+    "id": "6",
+    "method": "resources/list",
+    "params": {}
+  },
+  "test_mcp_prompts": {
+    "jsonrpc": "2.0",
+    "id": "7",
+    "method": "prompts/list",
+    "params": {}
+  },
+  "test_mcp_prompt_get": {
+    "jsonrpc": "2.0",
+    "id": "8",
+    "method": "prompts/get",
+    "params": {
+      "name": "customer_support",
+      "arguments": {
+        "customer_issue": "Cannot access my account after password reset",
+        "urgency": "high"
+      }
+    }
+  }
+}

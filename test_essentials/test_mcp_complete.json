@@ -1,0 +1,239 @@
+{
+  "test_mcp_complete_workflow": {
+    "description": "Complete MCP workflow test with multi-model support",
+    "tests": [
+      {
+        "name": "Initialize MCP Connection",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "init-1",
+          "method": "initialize",
+          "params": {
+            "protocolVersion": "2024-11-05",
+            "capabilities": {
+              "tools": {},
+              "resources": {},
+              "prompts": {},
+              "experimental": {
+                "sampling": true
+              }
+            },
+            "clientInfo": {
+              "name": "AWS MCP Chatbot Test Client",
+              "version": "2.0.0"
+            }
+          }
+        }
+      },
+      {
+        "name": "List Available Tools",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "tools-1",
+          "method": "tools/list",
+          "params": {}
+        },
+        "expected_tools": ["chat_with_ai", "get_conversation_history"]
+      },
+      {
+        "name": "Test Chat with AI Tool (New Name)",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "chat-1",
+          "method": "tools/call",
+          "params": {
+            "name": "chat_with_ai",
+            "arguments": {
+              "message": "Hello, I need help with my account. This is a test of the new chat_with_ai tool.",
+              "conversation_id": "mcp_test_conv_001",
+              "user_id": "mcp_test_user_123"
+            }
+          }
+        }
+      },
+      {
+        "name": "Test Backward Compatibility (Old Tool Name)",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "chat-2",
+          "method": "tools/call",
+          "params": {
+            "name": "chat_with_nova",
+            "arguments": {
+              "message": "Testing backward compatibility with the old chat_with_nova tool name.",
+              "conversation_id": "mcp_test_conv_002",
+              "user_id": "mcp_test_user_123"
+            }
+          }
+        }
+      },
+      {
+        "name": "Get Conversation History",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "history-1",
+          "method": "tools/call",
+          "params": {
+            "name": "get_conversation_history",
+            "arguments": {
+              "conversation_id": "mcp_test_conv_001"
+            }
+          }
+        }
+      },
+      {
+        "name": "List Resources",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "resources-1",
+          "method": "resources/list",
+          "params": {}
+        }
+      },
+      {
+        "name": "Read Conversation Resource",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "resource-read-1",
+          "method": "resources/read",
+          "params": {
+            "uri": "conversations://history/mcp_test_conv_001"
+          }
+        }
+      },
+      {
+        "name": "List Prompts",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "prompts-1",
+          "method": "prompts/list",
+          "params": {}
+        }
+      },
+      {
+        "name": "Get Customer Support Prompt",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "prompt-get-1",
+          "method": "prompts/get",
+          "params": {
+            "name": "customer_support",
+            "arguments": {
+              "customer_issue": "Account login problems with multi-factor authentication",
+              "urgency": "medium"
+            }
+          }
+        }
+      },
+      {
+        "name": "Get Password Reset Prompt",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "prompt-get-2",
+          "method": "prompts/get",
+          "params": {
+            "name": "password_reset_help",
+            "arguments": {
+              "user_type": "business",
+              "previous_attempts": "3"
+            }
+          }
+        }
+      },
+      {
+        "name": "Get Technical Support Prompt",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "prompt-get-3",
+          "method": "prompts/get",
+          "params": {
+            "name": "technical_support",
+            "arguments": {
+              "issue_type": "API integration",
+              "complexity": "high"
+            }
+          }
+        }
+      },
+      {
+        "name": "Test Sampling with Multi-Model Support",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "sampling-1",
+          "method": "sampling/createMessage",
+          "params": {
+            "messages": [
+              {
+                "role": "user",
+                "content": {
+                  "type": "text",
+                  "text": "I'm having trouble with my account and need immediate assistance. Can you help me understand what steps I should take?"
+                }
+              }
+            ],
+            "maxTokens": 500,
+            "temperature": 0.7
+          }
+        }
+      },
+      {
+        "name": "Test Complex Customer Scenario",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "complex-1",
+          "method": "tools/call",
+          "params": {
+            "name": "chat_with_ai",
+            "arguments": {
+              "message": "I've been a customer for 5 years and I'm extremely frustrated. I've tried to reset my password multiple times, contacted support twice, and nothing is working. I need to access my account urgently for a business presentation tomorrow. What are my options?",
+              "conversation_id": "mcp_complex_conv_001",
+              "user_id": "frustrated_customer_456"
+            }
+          }
+        }
+      },
+      {
+        "name": "Test Sentiment Analysis Integration",
+        "request": {
+          "jsonrpc": "2.0",
+          "id": "sentiment-1",
+          "method": "tools/call",
+          "params": {
+            "name": "chat_with_ai",
+            "arguments": {
+              "message": "I absolutely love this service! You've been incredibly helpful and responsive.",
+              "conversation_id": "mcp_positive_conv_001",
+              "user_id": "happy_customer_789"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "environment_configs": {
+    "nova_lite": {
+      "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0",
+      "description": "Fast, cost-effective model for balanced workloads"
+    },
+    "nova_micro": {
+      "BEDROCK_MODEL_ID": "amazon.nova-micro-v1:0",
+      "description": "Ultra-fast model for high-volume scenarios"
+    },
+    "nova_pro": {
+      "BEDROCK_MODEL_ID": "amazon.nova-pro-v1:0",
+      "description": "High-quality model for complex reasoning"
+    },
+    "claude_sonnet": {
+      "BEDROCK_MODEL_ID": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+      "description": "Advanced reasoning and analysis"
+    },
+    "claude_haiku": {
+      "BEDROCK_MODEL_ID": "anthropic.claude-3-5-haiku-20241022-v1:0",
+      "description": "Fast interactive responses"
+    },
+    "llama_11b": {
+      "BEDROCK_MODEL_ID": "meta.llama3-2-11b-instruct-v1:0",
+      "description": "Balanced open-source model"
+    }
+  }
+}

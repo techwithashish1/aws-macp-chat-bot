@@ -1,0 +1,202 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS Serverless Customer Support Chatbot with MCP
+
+Parameters:
+  Stage:
+    Type: String
+    Default: dev
+    Description: Deployment stage
+  Region:
+    Type: String
+    Default: us-east-1
+    Description: AWS Region
+  BedrockModelId:
+    Type: String
+    Default: amazon.nova-lite-v1:0
+    Description: Bedrock model ID to use for AI responses
+    AllowedValues:
+      - amazon.nova-lite-v1:0
+      - amazon.nova-micro-v1:0
+      - amazon.nova-pro-v1:0
+      - anthropic.claude-3-5-sonnet-20241022-v2:0
+      - anthropic.claude-3-5-haiku-20241022-v1:0
+      - anthropic.claude-3-opus-20240229-v1:0
+      - meta.llama3-2-90b-instruct-v1:0
+      - meta.llama3-2-11b-instruct-v1:0
+      - meta.llama3-2-3b-instruct-v1:0
+      - meta.llama3-2-1b-instruct-v1:0
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: python3.11
+    Environment:
+      Variables:
+        STAGE: !Ref Stage
+    Architectures:
+      - x86_64
+
+Resources:
+  # DynamoDB Tables
+  MCPConversationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: MCPConversations
+      AttributeDefinitions:
+        - AttributeName: conversation_id
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: S
+      KeySchema:
+        - AttributeName: conversation_id
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
+  # IAM Role for Lambda Functions
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                Resource:
+                  - !GetAtt MCPConversationsTable.Arn
+        - PolicyName: ComprehendAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - comprehend:DetectSentiment
+                Resource: "*"
+        - PolicyName: BedrockAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - bedrock:InvokeModel
+                Resource: "*"
+
+
+  # Lambda Functions
+  MCPServerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda_function/
+      Handler: mcp_lambda_handler.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          CONVERSATIONS_TABLE: !Ref MCPConversationsTable
+          BEDROCK_MODEL_ID_ARN: !Ref BedrockModelId
+      Events:
+        MCPApi:
+          Type: Api
+          Properties:
+            Path: /mcp
+            Method: post
+            RestApiId: !Ref MCPApiGateway
+      Timeout: 60
+
+  # API Gateway
+  MCPApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Stage
+      Cors:
+        AllowMethods: "'POST, OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
+      DefinitionBody:
+        swagger: '2.0'
+        info:
+          title: MCP Chatbot API
+          version: '1.0'
+        paths:
+          /mcp:
+            post:
+              x-amazon-apigateway-integration:
+                type: aws_proxy
+                httpMethod: POST
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MCPServerFunction.Arn}/invocations'
+              responses:
+                '200':
+                  description: Success
+            options:
+              x-amazon-apigateway-integration:
+                type: mock
+                requestTemplates:
+                  application/json: '{"statusCode": 200}'
+                responses:
+                  default:
+                    statusCode: '200'
+                    responseParameters:
+                      method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                      method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+                      method.response.header.Access-Control-Allow-Origin: "'*'"
+              responses:
+                '200':
+                  description: CORS preflight response
+                  headers:
+                    Access-Control-Allow-Headers:
+                      type: string
+                    Access-Control-Allow-Methods:
+                      type: string
+                    Access-Control-Allow-Origin:
+                      type: string
+
+
+  # Lambda Permissions for API Gateway
+  MCPServerFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref MCPServerFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${MCPApiGateway}/*/*'
+
+
+
+Outputs:
+  MCPApiUrl:
+    Description: API Gateway endpoint URL for MCP Server
+    Value: !Sub 'https://${MCPApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/mcp'
+    Export:
+      Name: !Sub '${AWS::StackName}-MCP-API-URL'
+
+  BedrockModelId:
+    Description: Configured Bedrock model ID
+    Value: !Ref BedrockModelId
+    Export:
+      Name: !Sub '${AWS::StackName}-Bedrock-Model'
+
+  MCPConversationsTableName:
+    Description: DynamoDB table name for MCP conversations
+    Value: !Ref MCPConversationsTable
+    Export:
+      Name: !Sub '${AWS::StackName}-Conversations-Table'
+
+
